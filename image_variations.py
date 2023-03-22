@@ -1,7 +1,7 @@
 from PIL import Image
 import kornia as K
 from kornia.core import Tensor
-
+from diffusers import AutoencoderKL
 from diffusers import UniPCMultistepScheduler
 from diffusers import StableDiffusionControlNetPipeline, ControlNetModel
 import torch
@@ -13,7 +13,14 @@ model = BlipForConditionalGeneration.from_pretrained(
 
 controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
 pipe = StableDiffusionControlNetPipeline.from_pretrained(
-    "runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16, revision="fp16"
+    "runwayml/stable-diffusion-v1-5", 
+    controlnet=controlnet, 
+    torch_dtype=torch.float16, 
+    revision="fp16",
+    vae=AutoencoderKL.from_pretrained(
+            "stabilityai/sd-vae-ft-mse",
+            torch_dtype=torch.float16
+            ).to("cuda")
 )
 
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
@@ -38,8 +45,8 @@ def image_variations(filepath):
     output_images = pipe(
         [prompt]*4,
         canny_image,
-        negative_prompt=["distorted, noisy, lowres, bad anatomy, worst quality, low quality"] * 4,
-        num_inference_steps=20,
+        negative_prompt=["distorted, noisy, lowres, bad anatomy, worst quality, low quality, bad eyes"] * 4,
+        num_inference_steps=25,
     ).images
 
     return output_images
