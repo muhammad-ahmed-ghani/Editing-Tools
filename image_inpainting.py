@@ -10,8 +10,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 pipe = StableDiffusionInpaintPipeline.from_pretrained("stabilityai/stable-diffusion-2-inpainting", 
         torch_dtype=torch.float16, 
-        revision="fp16", 
-        use_auth_token=ACCESS_TOKEN, 
+        revision="fp16",
         vae=AutoencoderKL.from_pretrained(
             "stabilityai/sd-vae-ft-mse",
             torch_dtype=torch.float16
