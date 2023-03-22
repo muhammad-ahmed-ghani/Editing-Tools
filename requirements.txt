@@ -23,3 +23,5 @@ ftfy
 scipy
 diffusers
 python-dotenv
+kornia
+kornia_rs
