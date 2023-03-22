@@ -21,3 +21,4 @@ transformers
 ftfy
 scipy
 diffusers
+python-dotenv
