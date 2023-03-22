@@ -9,6 +9,7 @@ from typing import List
 from pydantic import BaseModel
 from lama_cleaner.server import main
 from image_editing import edit_image
+from image_inpainting import inpaint
 
 class FakeLamaArgs(BaseModel):
     host: str = "0.0.0.0"
@@ -108,6 +109,17 @@ with demo:
         image_editing_output = gr.File(label="Output Image", interactive=False)
 
         image_editing_btn.click(edit_image, inputs=[input_editing_image, image_editing_options], outputs=[image_editing_output])
+
+    with gr.Tab("Image Inpainting"):
+        gr.Markdown("""
+        # <center>🖼️ Image Inpainting</center>
+        """)
+        input_inpainting_image = gr.Image(label="Upload an Image", type="pil", interactive=True, tool="sketch")
+        input_inpainting_prompt = gr.Textbox(label="Prompt", interactive=True)
+        input_inpainting_btn = gr.Button("Submit", interactive=True, elem_id="button")
+        input_inpainting_output = gr.Image(label="Output Image", interactive=False)
+
+        input_inpainting_btn.click(inpaint, inputs=[input_inpainting_image, input_inpainting_prompt], outputs=[input_inpainting_output])
 
     with gr.Tab("Video Converter"):
         gr.Markdown("""
