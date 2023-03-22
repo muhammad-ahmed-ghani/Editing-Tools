@@ -26,6 +26,10 @@ def image_variations(filepath):
     x_gray = K.color.rgb_to_grayscale(img)     
     x_canny: Tensor = K.filters.canny(x_gray)[0]
     canny_image = K.utils.tensor_to_image(1. - x_canny.clamp(0., 1.0))
+    canny_image = Image.fromarray((canny_image * 255).astype('uint8'))
+    canny_image = canny_image.convert("L")
+    canny_image = canny_image.point(lambda x: 0 if x > 128 else 255, mode="1")
+    canny_image = canny_image.convert("RGB")
 
     inputs = processor(Image.open(filepath), return_tensors="pt").to("cuda", torch.float16)
     out = model.generate(**inputs)
