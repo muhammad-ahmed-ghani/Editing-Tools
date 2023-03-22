@@ -12,7 +12,8 @@ xformers==0.0.16
 basicsr
 gfpgan
 realesrgan
-paddlepaddle-gpu
+paddlepaddle
+imageio==2.4.1
 paddlehub
 triton==2.0.0
 git+https://github.com/muhammad-ahmed-ghani/rembg.git
