@@ -17,6 +17,7 @@ pipe = StableDiffusionInpaintPipeline.from_pretrained("stabilityai/stable-diffus
             torch_dtype=torch.float16
             ).to(device)
         ).to(device)
+pipe.enable_xformers_memory_efficient_attention()
 
 def inpaint(inputs, prompt):
     output = pipe(prompt=prompt, image=inputs["image"], mask_image=inputs["mask"], guidance_scale=7.5)
