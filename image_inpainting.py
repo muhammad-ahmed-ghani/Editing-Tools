@@ -2,9 +2,6 @@ import os
 import torch
 from diffusers import StableDiffusionInpaintPipeline
 from diffusers import AutoencoderKL
-from dotenv import load_dotenv
-load_dotenv()
-ACCESS_TOKEN = os.getenv("HUGGINGFACE_ACCESS_TOKEN")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
