@@ -1,10 +1,15 @@
 import os
+from pyngrok import ngrok
+ngrok.set_auth_token("2LUMfqrPFqAnIA37Gk0M0XNNWal_7MWKNyvdikGUSuyhLgvPd")
+http_tunnel = ngrok.connect(5000)
+os.environ['NGROK_URL'] = http_tunnel.public_url
+
 import torch
 import gradio as gr
-from video_watermark_remover import *
-from video_converter import *
-from image_converter import *
-from image_watermark_remover import *
+from video_watermark_remover import convert_video_to_frames, remove_watermark
+from video_converter import convert_video
+from image_converter import convert_image
+from image_watermark_remover import remove_image_watermark
 from typing import List
 from pydantic import BaseModel
 from lama_cleaner.server import main
@@ -73,7 +78,7 @@ with demo:
         gr.Markdown("""
         # <center>🖼️ Image Converter</center>
         """)
-        image_format = ['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'gif', 'webp', 'ico', 'heic', 'heiv', 'heif']
+        image_format = ['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'gif', 'webp', 'ico']
         with gr.Row():
             with gr.Column():
                 input_image = gr.File(label="Upload an Image")

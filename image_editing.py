@@ -53,7 +53,7 @@ def edit_image(image, option):
         restore_image(image).save("gfpganOutput/output.png")
         return './gfpganOutput/output.png', './gfpganOutput/output.png'
     elif option == tools[1]:
-        image.save("deoldify/input.png")
+        image.convert("L").save("deoldify/input.png", "PNG", quality=80, optimize=True)
         colorize_model.predict("deoldify/input.png")
         return './output/DeOldify/'+Path('deoldify/input.png').stem+".png", './output/DeOldify/'+Path('deoldify/input.png').stem+".png"
     

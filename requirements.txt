@@ -13,7 +13,7 @@ xformers==0.0.16
 basicsr
 gfpgan
 realesrgan
-paddlepaddle
+paddlepaddle-gpu
 imageio==2.4.1
 paddlehub
 triton==2.0.0
@@ -25,3 +25,4 @@ diffusers
 python-dotenv
 kornia
 kornia_rs
+pyngrok
