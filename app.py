@@ -106,9 +106,11 @@ with demo:
         input_editing_image = gr.Image(label="Upload an Image", type="pil", interactive=True)
         image_editing_options = gr.Radio(["High Res", "Colorize", "Greyscale", "Remove Background"], label="Select Editing Option", interactive=True, value="High Resolution")
         image_editing_btn = gr.Button("Submit", interactive=True, elem_id="button")
-        image_editing_output = gr.File(label="Output Image", interactive=False)
+        with gr.Row():
+            image_editing_output = gr.Image(label="Output Preview", interactive=False)
+            image_editing_file = gr.File(label="Download File", interactive=False)
 
-        image_editing_btn.click(edit_image, inputs=[input_editing_image, image_editing_options], outputs=[image_editing_output])
+        image_editing_btn.click(edit_image, inputs=[input_editing_image, image_editing_options], outputs=[image_editing_output, image_editing_file])
 
     with gr.Tab("Image Inpainting"):
         gr.Markdown("""
@@ -117,9 +119,11 @@ with demo:
         input_inpainting_image = gr.Image(label="Upload an Image", type="pil", interactive=True, tool="sketch")
         input_inpainting_prompt = gr.Textbox(label="Prompt", interactive=True)
         input_inpainting_btn = gr.Button("Submit", interactive=True, elem_id="button")
-        input_inpainting_output = gr.Image(label="Output Image", interactive=False)
+        with gr.Row():
+            input_inpainting_output = gr.Image(label="Image Preview", interactive=False)
+            input_inpainting_file = gr.File(label="Download File", interactive=False)
 
-        input_inpainting_btn.click(inpaint, inputs=[input_inpainting_image, input_inpainting_prompt], outputs=[input_inpainting_output])
+        input_inpainting_btn.click(inpaint, inputs=[input_inpainting_image, input_inpainting_prompt], outputs=[input_inpainting_output, input_inpainting_file])
 
     with gr.Tab("Video Converter"):
         gr.Markdown("""

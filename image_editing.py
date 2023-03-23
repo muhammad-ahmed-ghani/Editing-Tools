@@ -51,15 +51,15 @@ def edit_image(image, option):
     tools = ["High Res", "Colorize", "Greyscale", "Remove Background"]
     if option == tools[0]:
         restore_image(image).save("gfpganOutput/output.png")
-        return './gfpganOutput/output.png'
+        return './gfpganOutput/output.png', './gfpganOutput/output.png'
     elif option == tools[1]:
         image.save("deoldify/input.png")
         colorize_model.predict("deoldify/input.png")
-        return './output/DeOldify/'+Path('deoldify/input.png').stem+".png"
+        return './output/DeOldify/'+Path('deoldify/input.png').stem+".png", './output/DeOldify/'+Path('deoldify/input.png').stem+".png"
     
     elif option == tools[2]:
         image.convert('L').save("greyscale/output.png")
-        return './greyscale/output.png'
+        return './greyscale/output.png', './greyscale/output.png'
     elif option == tools[3]:
-        output = remove(image).save("rembg/output.png")
-        return './rembg/output.png'
+        remove(image).save("rembg/output.png")
+        return './rembg/output.png', './rembg/output.png'

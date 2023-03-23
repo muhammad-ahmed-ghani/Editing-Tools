@@ -15,6 +15,9 @@ pipe = StableDiffusionInpaintPipeline.from_pretrained("stabilityai/stable-diffus
         ).to(device)
 pipe.enable_xformers_memory_efficient_attention()
 
+os.makedirs("inpainting_output", exist_ok=True)
+
 def inpaint(inputs, prompt):
     output = pipe(prompt=prompt, image=inputs["image"], mask_image=inputs["mask"], guidance_scale=7.5)
-    return output.images[0]
+    output.images[0].save(f"inpainting_output/output.png")
+    return output.images[0], "inpainting_output/output.png"
