@@ -1,9 +1,4 @@
 import os
-from pyngrok import ngrok
-ngrok.set_auth_token("2LUMfqrPFqAnIA37Gk0M0XNNWal_7MWKNyvdikGUSuyhLgvPd")
-http_tunnel = ngrok.connect(5000)
-os.environ['NGROK_URL'] = http_tunnel.public_url
-
 import torch
 import gradio as gr
 from video_watermark_remover import convert_video_to_frames, remove_watermark

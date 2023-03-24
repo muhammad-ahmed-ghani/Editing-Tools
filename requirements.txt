@@ -25,4 +25,3 @@ diffusers
 python-dotenv
 kornia
 kornia_rs
-pyngrok

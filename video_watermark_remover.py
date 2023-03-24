@@ -10,7 +10,6 @@ import gradio as gr
 import cv2
 import re
 
-NGROK_URL = os.getenv("NGROK_URL")
 
 def process_image(mask_data, image_path):
     image = Image.open(image_path)
@@ -57,7 +56,7 @@ def process_image(mask_data, image_path):
         'mask': ('mask.png', mask_data)
     }
 
-    response = requests.post(f'{NGROK_URL}/inpaint', data=form_data, files=files_data)
+    response = requests.post(f'http://localhost:5000/inpaint', data=form_data, files=files_data)
 
     if response.headers['Content-Type'] == 'image/jpeg' or response.headers['Content-Type'] == 'image/png':
         output_image_path = os.path.join('output_images', os.path.splitext(os.path.basename(image_path))[0] + '_inpainted' + os.path.splitext(image_path)[1])

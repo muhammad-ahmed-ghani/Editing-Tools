@@ -2,7 +2,6 @@ import os
 import io
 import requests
 from PIL import Image
-NGROK_URL = os.getenv("NGROK_URL")
 
 def remove_image_watermark(input):
     image = input["image"].convert("RGB")
@@ -54,7 +53,7 @@ def remove_image_watermark(input):
         'mask': ('mask.jpg', mask_data),
     }
 
-    response = requests.post(f'{NGROK_URL}/inpaint', data=form_data, files=files_data)
+    response = requests.post(f'http://localhost:5000/inpaint', data=form_data, files=files_data)
 
     if response.headers['Content-Type'] == 'image/jpeg' or response.headers['Content-Type'] == 'image/png':
         image = Image.open(io.BytesIO(response.content))
