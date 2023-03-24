@@ -53,7 +53,7 @@ def remove_image_watermark(input):
         'mask': ('mask.jpg', mask_data),
     }
 
-    response = requests.post(f'http://localhost:5000/inpaint', data=form_data, files=files_data)
+    response = requests.post(f'http://0.0.0.0:5000/inpaint', data=form_data, files=files_data)
 
     if response.headers['Content-Type'] == 'image/jpeg' or response.headers['Content-Type'] == 'image/png':
         image = Image.open(io.BytesIO(response.content))
