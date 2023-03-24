@@ -9,4 +9,10 @@ app_file: app.py
 pinned: false
 ---
 
+```bash
+conda create -n editing-tools python=3.9 -y
+conda activate editing-tools
+conda install -c "nvidia/label/cuda-11.7.0" cuda-toolkit cuda
+```
+
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
