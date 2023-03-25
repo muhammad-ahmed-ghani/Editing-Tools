@@ -1,38 +1,10 @@
-import os
-import torch
 import gradio as gr
-from video_watermark_remover import convert_video_to_frames, remove_watermark
+from watermark_remover import convert_video_to_frames, remove_image_watermark, remove_video_watermark
 from video_converter import convert_video
 from image_converter import convert_image
-from image_watermark_remover import remove_image_watermark
-from typing import List
-from pydantic import BaseModel
-from lama_cleaner.server import main
 from image_editing import edit_image
 from image_inpainting import inpaint
 
-class FakeLamaArgs(BaseModel):
-    host: str = "0.0.0.0"
-    port: int = 5000
-    model: str = 'lama'
-    hf_access_token: str = ""
-    sd_disable_nsfw: bool = False
-    sd_cpu_textencoder: bool = True
-    sd_run_local: bool = False
-    sd_enable_xformers: bool = False
-    local_files_only: bool = False
-    cpu_offload: bool = False
-    device: str = "cuda" if torch.cuda.is_available() else "cpu"
-    gui: bool = False
-    gui_size: List[int] = [1000, 1000]
-    input: str = ''
-    disable_model_switch: bool = True
-    debug: bool = False
-    no_half: bool = False
-    disable_nsfw: bool = False
-    enable_xformers: bool = True if torch.cuda.is_available() else False
-    model_dir: str = None
-    output_dir: str = None
 
 css = """
     #remove_btn {
@@ -173,16 +145,9 @@ with demo:
         with gr.Row():
             output_video = gr.File(label="Output Video", interactive=False)
         input_video.change(convert_video_to_frames, inputs=[input_video], outputs=[mask, remove_btn])
-        remove_btn.click(remove_watermark, inputs=[mask], outputs=[output_video, remove_btn])
+        remove_btn.click(remove_video_watermark, inputs=[mask], outputs=[output_video, remove_btn])
     
     gr.Markdown("""## <center style="margin:20px;">Developed by Muhammad Ahmed<img src="https://avatars.githubusercontent.com/u/63394104?v=4" style="height:50px;width:50px;border-radius:50%;margin:5px;"></img></center>
     """)
-
-# Change the code according to the error
-import threading
-
-thread = threading.Thread(target=main, kwargs={'args': FakeLamaArgs()})
-thread.daemon = True
-thread.start()
 
 demo.launch(show_api=False, share=True)
