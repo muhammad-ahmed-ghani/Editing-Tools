@@ -76,7 +76,9 @@ def remove_image_watermark(inputs):
         output = np.concatenate(
             (output, alpha_channel[:, :, np.newaxis]), axis=-1
         )
-    return Image.fromarray(output)
+    output_image_path = os.path.join('output_images', os.path.splitext(os.path.basename(inputs["image"].filename))[0] + '_inpainted' + os.path.splitext(inputs["image"].filename)[1])
+    cv2.imwrite(output_image_path, output)
+    return output_image_path
 
 def process_image(mask_data, image_path):
     return remove_image_watermark({"image": Image.open(image_path), "mask": mask_data})
