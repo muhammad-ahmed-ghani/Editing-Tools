@@ -76,12 +76,13 @@ def remove_image_watermark(inputs):
         output = np.concatenate(
             (output, alpha_channel[:, :, np.newaxis]), axis=-1
         )
-    output_image_path = os.path.join('output_images', os.path.splitext(os.path.basename(inputs["image"].filename))[0] + '_inpainted' + os.path.splitext(inputs["image"].filename)[1])
-    cv2.imwrite(output_image_path, output)
-    return output_image_path
+    return Image.fromarray(output)
 
 def process_image(mask_data, image_path):
-    return remove_image_watermark({"image": Image.open(image_path), "mask": mask_data})
+    output = remove_image_watermark({"image": Image.open(image_path), "mask": mask_data})
+    output_image_path = os.path.join('output_images', os.path.splitext(os.path.basename(image_path))[0] + '_inpainted' + os.path.splitext(image_path)[1])
+    output.save(output_image_path)
+    return output_image_path
 
 def remove_video_watermark(sketch, images_path='frames', output_path='output_images'):
     if os.path.exists('output_images'):
