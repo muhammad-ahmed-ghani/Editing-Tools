@@ -22,10 +22,11 @@ prompter_tokenizer  = AutoTokenizer.from_pretrained("gpt2")
 promptist_pipeline = pipeline("text-generation", model=prompter_model, tokenizer=prompter_tokenizer)
 
 # ControlNet for Image Variation Generation based on Canny Edge Detection
-controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
 pipe = StableDiffusionControlNetPipeline.from_pretrained(
-    "runwayml/stable-diffusion-v1-5", 
-    controlnet=controlnet, 
+    "stabilityai/stable-diffusion-2-1-base", 
+    controlnet=ControlNetModel.from_pretrained(
+                "thibaud/controlnet-sd21-canny-diffusers", 
+                torch_dtype=torch.float16),
     torch_dtype=torch.float16, 
     revision="fp16",
     vae=AutoencoderKL.from_pretrained(
