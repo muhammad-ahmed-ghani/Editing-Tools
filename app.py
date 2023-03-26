@@ -147,7 +147,7 @@ with demo:
         input_video.change(convert_video_to_frames, inputs=[input_video], outputs=[mask, remove_btn])
         remove_btn.click(remove_video_watermark, inputs=[mask], outputs=[output_video, remove_btn])
     
-    gr.Markdown("""## <center style="margin:20px;">Developed by Muhammad Ahmed<img src="https://avatars.githubusercontent.com/u/63394104?v=4" style="height:50px;width:50px;border-radius:50%;margin:5px;"></img></center>
+    gr.Markdown("""## <center style="margin:20px;">Developed by Muhammad Ahmed</center>
     """)
 
 demo.launch(show_api=False, share=True)
