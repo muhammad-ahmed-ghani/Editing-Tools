@@ -127,7 +127,7 @@ with demo:
         
     with gr.Tab("Video Watermark Remover"):
         gr.Markdown("""
-        # <center>🎥 Video Watermark Remover (Slow)</center>
+        # <center>🎥 Video Watermark Remover</center>
         """)
         with gr.Row():
             with gr.Column():

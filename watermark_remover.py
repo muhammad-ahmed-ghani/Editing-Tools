@@ -91,7 +91,7 @@ def remove_video_watermark(sketch, images_path='frames', output_path='output_ima
 
     image_paths = glob.glob(f'{images_path}/*.*')
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         executor.map(lambda image_path: process_image(sketch["mask"], image_path), image_paths)
 
     return gr.File.update(value=convert_frames_to_video('output_images'), visible=True), gr.Button.update(value='Done!')
