@@ -1,5 +1,6 @@
 import os
 import torch
+from PIL import Image
 from diffusers import StableDiffusionInpaintPipeline
 from diffusers import AutoencoderKL
 
@@ -18,6 +19,8 @@ pipe.enable_xformers_memory_efficient_attention()
 os.makedirs("inpainting_output", exist_ok=True)
 
 def inpaint(inputs, prompt):
-    output = pipe(prompt=prompt, image=inputs["image"], mask_image=inputs["mask"], guidance_scale=7.5)
+    image = inputs["image"].resize((image.size[0] - image.size[0] % 64, image.size[1] - image.size[1] % 64), Image.ANTIALIAS)
+    mask = inputs["mask"].resize((mask.size[0] - mask.size[0] % 64, mask.size[1] - mask.size[1] % 64), Image.ANTIALIAS)
+    output = pipe(prompt=prompt, image=image, mask_image=mask, guidance_scale=7.5, height=image.size[1], width=image.size[0])
     output.images[0].save(f"inpainting_output/output.png")
     return output.images[0], "inpainting_output/output.png"
