@@ -47,6 +47,14 @@ class VideoConverter:
         except Exception as e:
             raise Exception(f"Error converting audio: {e}")
 
+    def convert_to_gif(self, output_file):
+        try:
+            self.video.write_gif(output_file)
+            print(f"Video converted to GIF successfully!")
+            return output_file
+        except Exception as e:
+            raise Exception(f"Error converting video to GIF: {e}")
+
 def convert_video(input_file, format):
     try:
         converter = VideoConverter(input_file)
@@ -54,6 +62,8 @@ def convert_video(input_file, format):
             return converter.convert_video(f"output.{format}", format), "Converted video successfully!"
         elif format in ['mp3', 'wav', 'ogg', 'flac', 'aac']:
             return converter.convert_audio(f"output.{format}", format), "Converted audio successfully!"
+        elif format == "gif":
+            return converter.convert_to_gif(f"output.{format}"), "Converted to GIF successfully"
         else:
             return None, "Unsupported format!"
     except Exception as e:
