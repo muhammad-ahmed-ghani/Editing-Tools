@@ -146,8 +146,5 @@ with demo:
             output_video = gr.File(label="Output Video", interactive=False)
         input_video.change(convert_video_to_frames, inputs=[input_video], outputs=[mask, remove_btn])
         remove_btn.click(remove_video_watermark, inputs=[mask], outputs=[output_video, remove_btn])
-    
-    gr.Markdown("""## <center style="margin:20px;">Developed by Muhammad Ahmed</center>
-    """)
 
 demo.launch(show_api=False, share=True)
